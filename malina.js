@@ -230,6 +230,7 @@
     }
 
     function transformJS(code, option={}) {
+        let result = {};
         var ast = acorn.parse(code, { ecmaVersion: 6 });
 
         const funcTypes = {
@@ -269,6 +270,12 @@
         
         transform(ast.body);
 
+        ast.body.forEach(n => {
+            if(n.type != 'FunctionDeclaration') return;
+            if(n.id.name != 'onMount') return;
+            result.$onMount = true;
+        });
+
         ast.body.push({
             type: 'ExpressionStatement',
             expression: {
@@ -296,7 +303,8 @@
             type: 'FunctionDeclaration'
         }];
         
-        return astring.generate(ast);
+        result.code = astring.generate(ast);
+        return result;
     }
 
     let uniqIndex = 0;
@@ -341,7 +349,9 @@
                     this.watch(fn, callback, 'ro');
                 },
                 wa: function(fn, callback) {
-                    this.watchers.push({fn: fn, cb: callback, value: undefined, a: true})
+                    let w = {fn: fn, cb: callback, value: undefined, a: true};
+                    this.watchers.push(w);
+                    return w;
                 },
                 ev: function(el, event, callback) {
                     el.addEventListener(event, callback);
@@ -480,11 +490,11 @@
                         tpl.push('</template>');
                     } else if(n.type === 'node') {
                         setLvl();
-                        if(n.openTag.indexOf('{') >= 0) {
+                        if(n.openTag.indexOf('{') || n.openTag.indexOf('use:')) {
                             let r = parseElement(n.openTag);
                             let el = ['<' + n.name];
                             r.forEach(p => {
-                                let b = makeBind(p, getElementName());
+                                let b = makeBind(p, getElementName);
                                 if(b.prop) el.push(b.prop);
                                 if(b.bind) binds.push(b.bind);
                             });
@@ -542,6 +552,7 @@
         ${bb.name}($cd, $element);
         $$apply();
     `);
+        if(runtimeOption.$onMount) runtime.push(`$cd.once(onMount);`);
 
         runtime.push(`\n})();`);
         return runtime.join('');
@@ -673,7 +684,7 @@
         return result;
     }
 
-    function makeBind(prop, el) {
+    function makeBind(prop, makeEl) {
         let parts = prop.name.split(':');
         let name = parts[0];
         
@@ -684,6 +695,7 @@
         }
 
         if(name == 'on') {
+            let el = makeEl();
             let exp = getExpression();
             let mod = '', opt = parts[1].split('|');
             let event = opt[0];
@@ -694,6 +706,7 @@
             assert(event, prop.content);
             return {bind:`$cd.ev(${el}, "${event}", ($event) => { ${mod} $$apply(); let $element=${el}; ${Q(exp)}});`};
         } else if(name == 'bind') {
+            let el = makeEl();
             let exp = getExpression();
             let attr = parts[1];
             assert(attr, prop.content);
@@ -705,15 +718,31 @@
                     $cd.wf(() => !!(${exp}), (value) => { if(value != ${el}.checked) ${el}.checked = value; });`};
             } else throw 'Not supported: ' + prop.content;
         } else if(name == 'class' && parts.length > 1) {
+            let el = makeEl();
             let exp = getExpression();
             let className = parts[1];
             assert(className, prop.content);
             return {bind: `$cd.wf(() => !!(${exp}), (value) => { if(value) ${el}.classList.add("${className}"); else ${el}.classList.remove("${className}"); });`};
         } else if(name == 'use') {
+            let el = makeEl();
+            if(parts.length == 2) {
+                let local = 'use' + (uniqIndex++);
+                let args = prop.value?getExpression():'';
+                let code = `var ${local} = ${parts[1]}(${el}${args?', '+args:''});\n if(${local}) {`;
+                if(args) code += `
+                if(${local}.update) {
+                    let w = $cd.wa(() => [${args}], (args) => {${local}.update.apply(${local}, args);});
+                    w.value = w.fn();
+                }`;
+                code += `if(${local}.destroy) $cd.d(${local}.destroy);}`;
+                return {bind: code};
+            }
+            assert(parts.length == 1, prop.content);
             let exp = getExpression();
             return {bind: `$cd.once(() => { $$apply(); let $element=${el}; ${exp}; });`};
         } else {
             if(prop.value && prop.value.indexOf('{') >= 0) {
+                let el = makeEl();
                 let exp = parseText(prop.value, true);
                 return {bind: `$cd.wf(() => (${exp}), (value) => { ${el}.setAttribute('${name}', value) });`};
             }
@@ -739,8 +768,7 @@
         source.push(`
         function ${eachBlockName} ($cd, top) {
 
-            function bind($ctx, ${itemName}) {
-                let $index;
+            function bind($ctx, ${itemName}, $index) {
                 ${itemData.source};
                 ${itemData.name}($ctx.cd, $ctx.el);
                 $ctx.reindex = function(i) { $index = i; };
@@ -796,14 +824,14 @@
                             }
                         }
     
+                        ctx.reindex(i);
                     } else {
                         el = srcNode.cloneNode(true);
                         let childCD = new $$CD(); $cd.children.push(childCD);
                         ctx = {el: el, cd: childCD};
-                        bind(ctx, item);
+                        bind(ctx, item, i);
                         parentNode.insertBefore(el, prevNode.nextSibling);
                     }
-                    ctx.reindex(i);
                     prevNode = el;
                     newMapping.set(item, ctx);
 
@@ -887,6 +915,8 @@
         }
     }
 
+    const version = '0.4.0';
+
     function compile(src, option = {}) {
         const data = parse(src);
         let script;
@@ -898,12 +928,14 @@
 
         if(!option.name) option.name = 'widget';
         script = transformJS(script.content, option);
+        if(script.$onMount) option.$onMount = true;
 
         const runtime = buildRuntime(data, option);
-        return script.split('$$runtime()').join(runtime);
+        return script.code.split('$$runtime()').join(runtime);
     }
 
     exports.compile = compile;
+    exports.version = version;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
