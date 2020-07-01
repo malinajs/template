@@ -1,5 +1,5 @@
 
-const malina = require('./malina.js')
+const malina = require('malinajs');
 
 export default function malinaRollup(options = {}) {
     return {

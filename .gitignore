@@ -1,4 +1,4 @@
 Makefile
 node_modules/
 package-lock.json
-public/bundle.js
+src/public/bundle.js
