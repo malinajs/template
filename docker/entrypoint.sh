@@ -1,10 +1,19 @@
 #!/bin/bash
 
-cd /app
-mkdir -p /app/src
-
-if [ ! -f "/app/src/main.js" ]; then
-    cp /app/src_orig/* /app/src/
+if [ ! -f "/app/package.json" ]; then
+    mkdir -p /app/init
+    cd /app/init
+    npx degit malinajs/template
+    if [ ! -f "/app/src/main.js" ]; then
+        cd /app/init/src
+        cp -r ./* /app/src/
+    fi
+    rm /app/init/src -r
+    cd /app/init
+    mv ./* /app
+    cd /app
+    npm install
 fi
 
+cd /app
 DOCKER=1 npm run dev
