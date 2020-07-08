@@ -6,6 +6,7 @@ if [ ! -f "/app/package.json" ]; then
     npx degit malinajs/template
     if [ ! -f "/app/src/main.js" ]; then
         cd /app/init/src
+        mkdir -p /app/src
         cp -r ./* /app/src/
     fi
     rm /app/init/src -r
