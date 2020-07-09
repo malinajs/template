@@ -1,4 +1,5 @@
 
+import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-serve'
 import malinaRollup from './malina-rollup'
@@ -14,6 +15,7 @@ export default {
     },
     plugins: [
         malinaRollup(),
+        resolve(),
         watch && serve({contentBase: 'src/public', port: 7000, host: host}),
         watch && livereload({watch: 'src/public'})
     ],
