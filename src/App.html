@@ -1,13 +1,14 @@
 <script>
     let name = 'world';
+    $: degrees = (name.length-5) * 5;
 </script>
 
-<img src="./malinajs.svg" alt="Malina.js Logo" />
+<img src="./malinajs.svg" alt="Malina.js Logo" style:transform={`rotate(${degrees}deg)`}/>
 
 <h1>Hello {name}!</h1>
 
 <div>
-    <input type="text" :value={name} *{ $element.focus() } />
+    <input type="text" :value={name} *{$element.focus()} />
 </div>
 
 <div>Edit and save file <code>src/App.html</code> to reload</div>
@@ -17,6 +18,7 @@
         display: block;
         width: 200px;
         margin: 60px auto;
+        transition: .2s;
     }
 
     h1,div{
