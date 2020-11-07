@@ -1,4 +1,2 @@
-
-import App from './App.html';
-
+import App from './App.xht';
 App(document.body);
