@@ -16,14 +16,17 @@ if(process.argv.includes('--dev')){
 
     const app = runApp();
     
-    watch('src/app',{recursive: true},()=>{
+    watch('src/app',{recursive: true},(e,name)=>{
+        console.log(' - ',name);
         esbuild_app(false);
     });
 
-    watch('src/electron',{recursive: true},()=>{
+    watch('src/electron',{recursive: true},(e,name)=>{
+        console.log(' - ',name);
         esbuild_electron(false);
         app.restart();
     });
+    console.log('Watching changes...');
 }else{
     esbuild_app(true);
     esbuild_electron(true);
