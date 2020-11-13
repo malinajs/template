@@ -1,15 +1,19 @@
 {
   "name": "malina-app",
   "version": "1.0.0",
+  "main": "./static/js/electron.js",
   "scripts": {
-    "build": "node node_modules/malinajs/malina-esbuild",
-    "dev": "node node_modules/malinajs/malina-esbuild -w",
-    "start": "npx derver --production public"
+    "build": "node esbuild && build --tasks win-x64,linux-x64,mac-x64 .",
+    "dev": "node esbuild --dev"
   },
   "license": "MIT",
   "devDependencies": {
     "derver": "^0.2.1",
+    "electron": "^10.1.5",
+    "electron-reload": "^1.5.0",
     "esbuild": "^0.8.4",
-    "malinajs": "^0.6.2"
-  }
+    "malinajs": "^0.6.2",
+    "node-watch": "^0.7.0"
+  },
+  "dependencies": {}
 }
