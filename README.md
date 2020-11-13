@@ -1,6 +1,6 @@
-# Malina.js template
+# Malina.js Electron template
 
-This template for new Malina.js web-application.
+This template for new Malina.js desktop application based on Electron
 
 # Developing
 
@@ -8,43 +8,20 @@ This template for new Malina.js web-application.
 npm run dev
 ```
 
-... and open browser on [http://localhost:7000].
+Then window with application will be oppened (and Devtools window also). 
 
-Edit files in `src` directory or put you static files in `public`. Web-application opened in development mode will be reloaded on each change.
+Edit files in `src/app` directory or put you static files in `static`. Application will be reloaded on each change.
 
-# Deploy
+Also you may change the Electron part at `src/electron`. Each change will restart the application.
 
-Run command below to build your web-application into optimized buundle:
+# Build
+
+Run command below to build your application:
 
 ```
 npm run build
 ```
 
-Then upload content from the `public` directory on any static files hosting like Github Pages or any shared hosting.
+You will found directory with executable and libreary files in the `dist` folder. This directory may be packed by tools like `electron-installer-windows ` or other packagers.
 
-Or you can run `npm run start` to launch your app in the Node environment.
-
-# Configuration
-
-You may set config for each part of the template by config files in the app root directory:
-
-* `malina.config.js` - [Malina.js](https://malinajs.github.io/docs/#compile-options) compiler configuration.
-* `esbuild.config.js` - options for [ESBuild](https://esbuild.github.io/api/) bundler.
-* `derver.config.js` - configuration for [Derver](https://www.npmjs.com/package/derver) web-server.
-
-## Example
-
-If you going to use plugins for ESBuild in the `esbuild.config.js` you must add `malina-esbuild` plugin also:
-
-```js
-// esbuild.config.js
-
-const {malinaPlugin} = require('malinajs/malina-esbuild');
-
-module.exports = {
-    plugins: [
-        ... ,   // some of your plugins
-        malinaPlugin()
-    ]
-}
-```
+By default you will get binary to run in the your OS and architecture. Change `build` script in the `package.json` to add other platforms and other options for [electron-packager](https://www.npmjs.com/package/electron-packager) tool.
