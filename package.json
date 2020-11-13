@@ -1,15 +1,16 @@
 {
-  "name": "malina-app",
+  "name": "malina-desktop-app",
   "version": "1.0.0",
   "main": "./static/js/electron.js",
   "scripts": {
-    "build": "node esbuild && build --tasks win-x64,linux-x64,mac-x64 .",
+    "build": "node esbuild && electron-packager . --out=dist --overwrite",
     "dev": "node esbuild --dev"
   },
   "license": "MIT",
   "devDependencies": {
     "derver": "^0.2.1",
     "electron": "^10.1.5",
+    "electron-packager": "^15.1.0",
     "electron-reload": "^1.5.0",
     "esbuild": "^0.8.4",
     "malinajs": "^0.6.2",
