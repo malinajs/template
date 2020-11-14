@@ -2,14 +2,15 @@
   "name": "malina-app",
   "version": "1.0.0",
   "scripts": {
-    "build": "node node_modules/malinajs/malina-esbuild",
-    "dev": "node node_modules/malinajs/malina-esbuild -w",
+    "build": "rollup -c",
+    "dev": "rollup -cw",
     "start": "npx derver --production public"
   },
   "license": "MIT",
   "devDependencies": {
-    "derver": "^0.2.1",
-    "esbuild": "^0.8.4",
-    "malinajs": "^0.6.2"
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "derver": "^0.2.2",
+    "malinajs": "^0.6.2",
+    "rollup": "^2.33.1"
   }
 }
