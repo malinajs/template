@@ -8,7 +8,7 @@ This template for new [Malina.js](https://malinajs.github.io) web-application.
 npm run dev
 ```
 
-... and open browser on [http://localhost:7000].
+... and open browser on [http://localhost:7000]().
 
 Edit files in `src` directory or put you static files in `public`. Web-application opened in development mode will be reloaded on each change.
 
