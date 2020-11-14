@@ -9,7 +9,6 @@ export default {
     output: {
         file: 'public/bundle.js',
         format: 'iife',
-        
     },
     plugins: [
         malina({
