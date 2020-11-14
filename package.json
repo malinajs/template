@@ -4,7 +4,8 @@
   "scripts": {
     "build": "node node_modules/malinajs/malina-esbuild",
     "dev": "node node_modules/malinajs/malina-esbuild -w",
-    "start": "npx derver --production public"
+    "start": "npx derver --production public",
+    "surge": "cd public && npx surge"
   },
   "license": "MIT",
   "devDependencies": {
