@@ -4,7 +4,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -cw",
-    "start": "npx derver --production public"
+    "start": "npx derver --production public",
+    "surge": "cd public && surge"
   },
   "license": "MIT",
   "devDependencies": {
