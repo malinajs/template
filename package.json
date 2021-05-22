@@ -9,8 +9,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "derver": "^0.2.1",
-    "esbuild": "^0.8.4",
-    "malinajs": "^0.6.2"
+    "derver": "^0.4.15",
+    "esbuild": "^0.12.1",
+    "malinajs": "^0.6.15"
   }
 }
