@@ -71,7 +71,7 @@ async function esbuild_app(production){
         outfile: APP_BUNDLE,
         minify: true,
         bundle: true,
-        plugins: [malinaPlugin()],
+        plugins: [malinaPlugin({css:true})],
         ...options
     };
 

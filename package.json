@@ -8,13 +8,12 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "derver": "^0.2.1",
-    "electron": "^10.1.5",
-    "electron-packager": "^15.1.0",
+    "derver": "^0.4.15",
+    "electron": "^12.0.9",
+    "electron-packager": "^15.2.0",
     "electron-reload": "^1.5.0",
-    "esbuild": "^0.8.4",
-    "malinajs": "^0.6.2",
-    "node-watch": "^0.7.0"
-  },
-  "dependencies": {}
+    "esbuild": "^0.12.1",
+    "malinajs": "^0.6.15",
+    "node-watch": "^0.7.1"
+  }
 }
