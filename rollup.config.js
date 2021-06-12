@@ -1,6 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import derver from 'derver/rollup-plugin';
 import css from 'rollup-plugin-css-only';
+import { terser } from "rollup-plugin-terser";
 import malina from 'malinajs/malina-rollup'
 import malinaSass from 'malinajs/plugins/sass'
 
@@ -21,7 +22,8 @@ export default {
         }),
         resolve(),
         DEV && derver(),
-        !cssInJS && css({ output: 'bundle.css' })
+        !cssInJS && css({ output: 'bundle.css' }),
+        !DEV && terser()
     ],
     watch: {
         clearScreen: false
