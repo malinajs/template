@@ -1,19 +1,20 @@
 {
-  "name": "malina-app",
-  "version": "1.0.0",
+  "name": "svelte-derver-starter",
+  "version": "0.0.1",
+  "description": "SvelteJS client and Derver server starter, bundeled with ESBuild",
+  "main": "index.js",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -cw",
-    "start": "npx derver --production public",
-    "surge": "cd public && npx surge"
+    "build": "node esbuild",
+    "dev": "node esbuild --dev",
+    "prestart": "npm run build",
+    "start": "cd dist && node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^10.0.0",
-    "derver": "^0.2.2",
-    "malinajs": "^0.6.15",
-    "rollup": "^2.33.1",
-    "rollup-plugin-css-only": "^3.1.0",
-    "sass": "^1.33.0"
+    "derver": "^0.4.16",
+    "esbuild": "^0.12.8",
+    "malinajs": "^0.6.23",
+    "node-watch": "^0.7.1"
   }
 }

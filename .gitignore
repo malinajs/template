@@ -1,3 +1,4 @@
-node_modules/
+node_modules
+dist/app.*
+dist/static/build
 package-lock.json
-public/bundle.js
