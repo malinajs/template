@@ -6,7 +6,7 @@ import malina from 'malinajs/malina-rollup'
 import malinaSass from 'malinajs/plugins/sass'
 
 const DEV = !!process.env.ROLLUP_WATCH;
-const cssInJS = true;
+const cssInJS = false;
 
 export default {
     input: 'src/main.js',
@@ -21,8 +21,8 @@ export default {
             plugins: [malinaSass()]
         }),
         resolve(),
-        DEV && derver(),
         !cssInJS && css({ output: 'bundle.css' }),
+        DEV && derver(),
         !DEV && terser()
     ],
     watch: {
