@@ -1,7 +1,7 @@
 {
   "name": "malina-fullstack-app",
   "version": "0.0.1",
-  "description": "malina client and Derver server app, bundeled with esduild",
+  "description": "malina client and Derver server app, bundeled with esbuild",
   "main": "index.js",
   "scripts": {
     "build": "node esbuild",
@@ -12,9 +12,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "derver": "^0.4.16",
-    "esbuild": "^0.12.8",
-    "malinajs": "^0.6.23",
-    "node-watch": "^0.7.1"
+    "derver": "^0.4.19",
+    "esbuild": "^0.12.28",
+    "malinajs": "^0.6.43",
+    "node-watch": "^0.7.2"
   }
 }
