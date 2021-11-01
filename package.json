@@ -12,9 +12,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "derver": "^0.4.19",
-    "esbuild": "^0.12.28",
-    "malinajs": "^0.6.43",
+    "derver": "^0.5.1",
+    "esbuild": "^0.13.12",
+    "malinajs": "^0.6.x",
     "node-watch": "^0.7.2"
   }
 }
