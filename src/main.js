@@ -1,2 +1,5 @@
+
+import {mount} from 'malinajs';
 import App from './App.xht';
-App(document.body);
+
+mount(document.body, App);
