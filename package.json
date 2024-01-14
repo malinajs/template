@@ -11,7 +11,7 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.6",
     "derver": "^0.5.1",
-    "malinajs": "^0.6.x",
+    "malinajs": "^0.7.x",
     "rollup": "^2.59.0",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-terser": "^7.0.2",
